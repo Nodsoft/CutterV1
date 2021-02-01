@@ -11,7 +11,6 @@ namespace Nodsoft.Cutter.Web.Services
 	{
 		private IMongoCollection<CutterLink> CutterLinks { get; init; }
 		public const int DefaultLinkLength = 8;
-		private static readonly Random Random = new();
 
 
 		public CutterLinkService(IConfiguration config)
@@ -23,9 +22,9 @@ namespace Nodsoft.Cutter.Web.Services
 			CutterLinks = db.GetCollection<CutterLink>(mongoConfig["CutterLinksCollection"]);
 		}
 
-		public async Task<CutterLink> FetchCutter(string linkName) => await (await CutterLinks.FindAsync(x => x.Name == linkName)).FirstOrDefaultAsync();
+		public async Task<CutterLink> FetchCutterAsync(string linkName) => await (await CutterLinks.FindAsync(x => x.Name == linkName)).FirstOrDefaultAsync();
 
-		public async Task<CutterLink> CreateCutter(CutterLink cutter)
+		public async Task<CutterLink> CreateCutterAsync(CutterLink cutter)
 		{
 			if (!await (await CutterLinks.FindAsync(x => x.Destination == cutter.Destination)).AnyAsync())
 			{
@@ -41,15 +40,9 @@ namespace Nodsoft.Cutter.Web.Services
 				await CutterLinks.InsertOneAsync(cutter);
 			}
 
-			return await (await CutterLinks.FindAsync(x => x.Name == cutter.Name)).FirstOrDefaultAsync();
+			return await (await CutterLinks.FindAsync(x => x.Destination == cutter.Destination)).FirstOrDefaultAsync();
 		}
 
-		private static string GenerateCutterName()
-		{
-			byte[] bytes = new byte[DefaultLinkLength];
-			Random.NextBytes(bytes);
-
-			return Base62Converter.Decode(bytes);
-		}
+		private static string GenerateCutterName() => Base62Generator.GenerateString(DefaultLinkLength);
 	}
 }
