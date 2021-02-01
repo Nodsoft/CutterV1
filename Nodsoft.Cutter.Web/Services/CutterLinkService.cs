@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using Nodsoft.Cutter.Web.Data.Models;
 using System;
@@ -9,12 +10,15 @@ namespace Nodsoft.Cutter.Web.Services
 {
 	public class CutterLinkService
 	{
-		private IMongoCollection<CutterLink> CutterLinks { get; init; }
 		public const int DefaultLinkLength = 8;
 
+		private IMongoCollection<CutterLink> CutterLinks { get; init; }
+		private readonly ILogger<CutterLinkService> logger;
 
-		public CutterLinkService(IConfiguration config)
+		public CutterLinkService(IConfiguration config, ILogger<CutterLinkService> logger)
 		{
+			this.logger = logger;
+
 			IConfigurationSection mongoConfig = config.GetSection("MongoDatabase");
 			MongoClient client = new(mongoConfig["ConnectionString"]);
 			IMongoDatabase db = client.GetDatabase(mongoConfig["DatabaseName"]);
@@ -38,6 +42,8 @@ namespace Nodsoft.Cutter.Web.Services
 				}
 
 				await CutterLinks.InsertOneAsync(cutter);
+
+				logger.LogInformation("Link '{Link}' was inserted with Name '{Name}' by User '{RemoteIP}'.", cutter.Destination, cutter.Name ?? "N/A", cutter.CreatedFromIp);
 			}
 
 			return await (await CutterLinks.FindAsync(x => x.Destination == cutter.Destination)).FirstOrDefaultAsync();

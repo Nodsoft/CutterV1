@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,6 +47,14 @@ namespace Nodsoft.Cutter.Web
 			app.UseStaticFiles();
 
 			app.UseRouting();
+
+			if (env.IsProduction()) // Nginx configuration step
+			{
+				app.UseForwardedHeaders(new ForwardedHeadersOptions
+				{
+					ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+				});
+			}
 
 			app.UseAuthorization();
 

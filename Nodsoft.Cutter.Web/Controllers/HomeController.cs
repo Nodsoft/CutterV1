@@ -68,10 +68,11 @@ namespace Nodsoft.Cutter.Web.Controllers
 
 		private async Task<CutterLink> SubmitNewAsync(CutterLink cutter)
 		{
+			string remoteIp = HttpContext.Connection.RemoteIpAddress.ToString();
 			cutter = cutter with
 			{
 				CreatedAt = DateTime.UtcNow,
-				CreatedFromIp = HttpContext.Connection.RemoteIpAddress.ToString()
+				CreatedFromIp = remoteIp
 			};
 
 			return await service.CreateCutterAsync(cutter);
