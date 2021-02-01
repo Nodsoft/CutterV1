@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Nodsoft.Cutter.Web.Data.Models
 {
-	public class CutterLink
+	public record CutterLink
 	{
 		[BsonId, BsonRepresentation(BsonType.ObjectId)]
 		public string Id { get; init; }
