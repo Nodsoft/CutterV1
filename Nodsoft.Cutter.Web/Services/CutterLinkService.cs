@@ -43,6 +43,7 @@ namespace Nodsoft.Cutter.Web.Services
 			return await (await CutterLinks.FindAsync(x => x.Destination == cutter.Destination)).FirstOrDefaultAsync();
 		}
 
+
 		private static string GenerateCutterName() => Base62Generator.GenerateString(DefaultLinkLength);
 	}
 }

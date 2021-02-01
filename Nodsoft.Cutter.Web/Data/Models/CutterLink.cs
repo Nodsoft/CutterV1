@@ -9,7 +9,7 @@ namespace Nodsoft.Cutter.Web.Data.Models
 	{
 		[BsonId, BsonRepresentation(BsonType.ObjectId)]
 		public string Id { get; init; }
-		[BsonRequired, RegularExpression("/^[a-zA-Z0-9-_]+$/")]
+		[BsonRequired, RegularExpression(@"^[a-zA-Z\d-_]+$")]
 		public string Name { get; set; }
 
 		[Required, BsonRequired, Url]
