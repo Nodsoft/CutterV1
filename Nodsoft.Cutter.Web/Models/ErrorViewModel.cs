@@ -1,11 +1,8 @@
-using System;
+namespace Nodsoft.Cutter.Web.Models;
 
-namespace Nodsoft.Cutter.Web.Models
+public sealed class ErrorViewModel
 {
-	public class ErrorViewModel
-	{
-		public string RequestId { get; set; }
+	public string RequestId { get; set; }
 
-		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-	}
+	public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }
