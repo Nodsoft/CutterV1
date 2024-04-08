@@ -1,0 +1,6 @@
+﻿services:
+  nodsoft.cutter.web:
+    image: nodsoft.cutter.web
+    build:
+      context: .
+      dockerfile: Nodsoft.Cutter.Web/Dockerfile

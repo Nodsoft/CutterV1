@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.30914.41
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodsoft.Cutter.Web", "Nodsoft.Cutter.Web\Nodsoft.Cutter.Web.csproj", "{03A9B6DD-5E02-41E2-9DF6-FAA21284F743}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22CF8A49-26DE-4DC7-93A7-6444C2F55DDF}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		devcontainer.json = devcontainer.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
